@@ -1,31 +1,38 @@
 import RocketCard from "./RocketCard";
 import RocketDetail from "./RocketDetail";
 import PaginationControls from "./PaginationControls";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function RocketList() {
+function RocketList({ searchQuery, onSelectRocket }) {
+  const [rockets, setRockets] = useState([]);
+
+  useEffect(() => {
+    getRockets();
+  }, []);
+
+  function getRockets() {
+    axios
+      .post(
+        "https://api.spacexdata.com/v4/rockets/query",
+
+      )
+      .then(function (response) {
+        console.log(response.data.docs);
+        setRockets(response.data.docs);
+      });
+  }
+
   return (
-    // <div className="container">
-    //     <RocketCard>
-
-    //     </RocketCard>
-
-    //     <RocketDetail>
-
-    //     </RocketDetail>
-    // </div>
-
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
-          <RocketCard></RocketCard>
+          {
+            rockets.map(
+              rocket =>
+                <RocketCard rocket={rocket}></RocketCard>
+            )
+          }
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import Search from "./Search";
 
-function Header() {
+function Header({ searchQuery, onSetSearchQuery }) {
   return (
     <header className="text-gray-600 body-font flex-none z-50 bg-slate-950">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row justify-between">
@@ -9,7 +9,7 @@ function Header() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
+            strokeLinecap="round"
             stroke-linejoin="round"
             stroke-width="2"
             className="w-10 h-10 text-white p-2 bg-yellow-500 rounded-full"
@@ -20,7 +20,10 @@ function Header() {
           <span className="ml-3 text-xl">Space-x</span>
         </a>
 
-        <Search></Search>
+        <Search
+          searchQuery={searchQuery}
+          updateSearchQuery={(query) => onSetSearchQuery}
+        ></Search>
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-function Search() {
+function Search({ searchQuery, updateSearchQuery }) {
   return (
     <div className="">
       <input

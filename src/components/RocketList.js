@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function RocketList({ searchQuery, onSelectRocket }) {
+  const [meta, setMeta] = useState({});
+
   const [rockets, setRockets] = useState([]);
 
   useEffect(() => {
@@ -14,12 +16,12 @@ function RocketList({ searchQuery, onSelectRocket }) {
   function getRockets() {
     axios
       .post(
-        "https://api.spacexdata.com/v4/rockets/query",
-
+        "https://api.spacexdata.com/v4/rockets/query"
       )
       .then(function (response) {
         console.log(response.data.docs);
         setRockets(response.data.docs);
+        setMeta(response.data)
       });
   }
 
@@ -37,10 +39,18 @@ function RocketList({ searchQuery, onSelectRocket }) {
       </div>
 
       <div className="sticky bottom-0">
-        <PaginationControls></PaginationControls>
+        <PaginationControls
+          currentPage={meta.page}
+          itemCount={rockets.length}
+          pageCount={meta.limit}
+          totalCount={meta.totalDocs}
+          totalPages={meta.totalPages ?? []}
+          onClickOnPage={page => getRockets()}
+        ></PaginationControls>
       </div>
     </section>
   );
 }
+
 
 export default RocketList;

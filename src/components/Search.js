@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
-
+import { useEffect } from "react";
+import axios from "axios";
 function Search({ updateFilterOptions }) {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCost, setSelectedCost] = useState('');
   const [selectedFlight, setSelectedFlight] = useState('');
+  const [rockets, setRockets] = useState([]);
 
-  const countries = ["Nigeria", "Niger"];
-  const costPerLaunchOptions = [1003, 1000];
-  const firstFlightDates = ["12-12-12", "20-02-20"];
+  useEffect(() => {
+    const fetchRockets = async () => {
+      try {
+        const response = await axios.get('https://api.spacexdata.com/v4/rockets');
+        setRockets(response.data);
+      } catch (error) {
+        console.error('Error fetching rockets:', error);
+      }
+    };
+
+    fetchRockets();
+  }, []);
+
+  const costPerFlight = rockets.map(rocket => rocket.cost_per_launch);
+  const flightType = rockets.map(rocket => rocket.type);
+  const flightName = rockets.map(rocket => rocket.name);
+
+  const countries = flightName;
+  const costPerLaunchOptions = costPerFlight;
+  const firstFlightDates = flightType;
 
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);

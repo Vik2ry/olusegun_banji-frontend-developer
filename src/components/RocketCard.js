@@ -13,7 +13,7 @@ function RocketCard({ rocket }) {
   };
 
   return (
-    <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
+    <div className="relative lg:w-1/4 md:w-1/2 p-4 w-full">
       <div onClick={openModal}>
         <div className="block relative h-48 rounded overflow-hidden cursor-pointer">
           <img

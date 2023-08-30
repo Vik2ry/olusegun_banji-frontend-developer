@@ -81,9 +81,9 @@ function App() {
 
         <RocketList
           searchQuery={searchQuery}
-          filterOptions={filterOptions} // Pass filter options to RocketList
+          filterOptions={filterOptions}
           selectedRocket={selectedRocket}
-        ></RocketList>
+        />
       </div>
 
       <Footer></Footer>

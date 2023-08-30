@@ -128,6 +128,21 @@ function Search({ updateFilterOptions }) {
           </svg>
         </div>
       </div>
+      <div className="relative">
+        <button
+          className="bg-indigo-600 text-white px-3 py-1 rounded-md mt-2"
+          onClick={() => {
+            // Call the updateFilterOptions function to apply the selected filters
+            updateFilterOptions({
+              country: selectedCountry,
+              cost_per_launch: selectedCost,
+              first_flight: selectedFlight,
+            });
+          }}
+        >
+          Apply Filters
+        </button>
+      </div>
 
       {/* Similar structure for the other two dropdowns */}
     </div>

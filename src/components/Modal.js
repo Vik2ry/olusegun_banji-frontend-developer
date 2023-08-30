@@ -10,9 +10,9 @@ function Modal({ rocket, closeModal }) {
             {!rocket ? (
                 <Loading />
             ) : (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="absolute w-full inset-0 z-50 flex items-center justify-center bg-black">
 
-                    <div className="bg-white rounded-lg p-8 max-w-md overflow-y-auto">
+                    <div className="bg-white rounded-lg p-8 max-w-md w-full overflow-y-auto">
 
                         <section className="py-32 max-width grid grid-cols-1 gap-8 md:grid-cols-2">
                             <article>

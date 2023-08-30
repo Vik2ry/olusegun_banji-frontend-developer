@@ -1,10 +1,10 @@
 import RocketCard from "./RocketCard";
-import RocketDetail from "./RocketDetail";
+// import RocketDetail from "./RocketDetail";
 import PaginationControls from "./PaginationControls";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function RocketList({ searchQuery, onSelectRocket }) {
+function RocketList({ searchQuery, filterOptions, onSelectRocket }) {
   const [meta, setMeta] = useState({});
 
   const [rockets, setRockets] = useState([]);

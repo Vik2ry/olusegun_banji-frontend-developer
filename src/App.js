@@ -7,7 +7,7 @@ import Search from "./components/Search"; // Import the new Search component
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRocket, setSelectedRocket] = useState(null);
+  // const [selectedRocket, setSelectedRocket] = useState(null);
   const [filterOptions, setFilterOptions] = useState({}); // Initialize filter options
 
   return (
@@ -75,14 +75,10 @@ function App() {
       <div id="2">
 
         {/* Render the new Search component */}
-        <Search
-          updateFilterOptions={(newOptions) => setFilterOptions(newOptions)}
-        />
+        <Search filterOptions={filterOptions} updateFilterOptions={setFilterOptions} />
 
         <RocketList
-          searchQuery={searchQuery}
-          filterOptions={filterOptions}
-          selectedRocket={selectedRocket}
+          rocketIds={['falcon1', 'falcon9', 'falconheavy', 'starship']} filterOptions={filterOptions}
         />
       </div>
 

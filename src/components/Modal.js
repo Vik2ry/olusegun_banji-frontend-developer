@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loading } from "./Loading"
+import axios from "axios";
 
-function Modal({ rocket, closeModal }) {
+function Modal({ rocketId, closeModal }) {
     const [value, setValue] = useState(0)
     const [imperial, setImperial] = useState(false);
+    const [rocket, setRocket] = useState(null);
+
+    useEffect(() => {
+        const fetchRocket = async () => {
+            try {
+                const response = await axios.get(`https://api.spacexdata.com/v4/rockets/${rocketId}`);
+                setRocket(response.data);
+            } catch (error) {
+                console.error('Error fetching rocket:', error);
+            }
+        };
+
+        fetchRocket();
+    }, [rocketId]);
 
     return (
         <>

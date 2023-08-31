@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import axios from "axios";
-function Search({ updateFilterOptions }) {
+function Search({ rocketIds, filterOptions, updateFilterOptions }) {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCost, setSelectedCost] = useState('');
   const [selectedFlight, setSelectedFlight] = useState('');
   const [rockets, setRockets] = useState([]);
 
-  useEffect(() => {
-    const fetchRockets = async () => {
-      try {
-        const response = await axios.get('https://api.spacexdata.com/v4/rockets');
-        setRockets(response.data);
-      } catch (error) {
-        console.error('Error fetching rockets:', error);
+
+
+  const fetchRockets = useCallback(async () => {
+    try {
+      let queryParams = {
+        id: rocketIds.join(','),
+      };
+
+      // Apply filters if provided
+      if (filterOptions) {
+        queryParams = { ...queryParams, ...filterOptions };
       }
-    };
+
+      const response = await axios.get('https://api.spacexdata.com/v4/rockets', {
+        params: queryParams,
+      });
+      setRockets(response.data);
+    } catch (error) {
+      console.error('Error fetching rockets:', error);
+    }
+  }, [rocketIds, filterOptions]);
+
+  useEffect(() => {
 
     fetchRockets();
-  }, []);
+  }, [fetchRockets]);
+
 
   const costPerFlight = rockets.map(rocket => rocket.cost_per_launch);
   const flightType = rockets.map(rocket => rocket.type);

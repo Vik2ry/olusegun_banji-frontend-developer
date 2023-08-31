@@ -75,14 +75,12 @@ function App() {
       <div id="2">
 
         {/* Render the new Search component */}
-        <Search
-          updateFilterOptions={(newOptions) => setFilterOptions(newOptions)}
-        />
+        <Search filterOptions={filterOptions} updateFilterOptions={setFilterOptions} />
 
         <RocketList
           searchQuery={searchQuery}
           filterOptions={filterOptions}
-        // selectedRocket={selectedRocket}
+          selectedRocket={selectedRocket}
         />
       </div>
 

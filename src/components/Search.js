@@ -52,7 +52,7 @@ function Search({ updateFilterOptions }) {
           onChange={handleCountryChange}
           className="block appearance-none w-full bg-gray-500 rounded border border-gray-300 focus:border-white focus:ring-2 focus:ring-white text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
-          <option value="">Select Type</option>
+          <option value="">Select Name</option>
           {countries.map((country, index) => (
             <option key={index} value={country}>
               {country}
@@ -108,7 +108,7 @@ function Search({ updateFilterOptions }) {
           onChange={handleFlightChange}
           className="block appearance-none w-full bg-gray-500 rounded border border-gray-300 focus:border-white focus:ring-2 focus:ring-white text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
-          <option value="">Select Name</option>
+          <option value="">Select Type</option>
           {firstFlightDates.map((first_flight, index) => (
             <option key={index} value={first_flight}>
               {first_flight}

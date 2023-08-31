@@ -9,6 +9,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   // const [selectedRocket, setSelectedRocket] = useState(null);
   const [filterOptions, setFilterOptions] = useState({}); // Initialize filter options
+  const rocketIds = ['falcon1', 'falcon9', 'falconheavy', 'starship'];
 
   return (
     <div className="bg-slate-800 text-white flex flex-col">
@@ -75,12 +76,12 @@ function App() {
       <div id="2">
 
         {/* Render the new Search component */}
-        <Search filterOptions={filterOptions} updateFilterOptions={setFilterOptions} />
+        <Search rocketIds={rocketIds} filterOptions={filterOptions} updateFilterOptions={setFilterOptions} />
 
         <RocketList
           searchQuery={searchQuery}
           filterOptions={filterOptions}
-          selectedRocket={selectedRocket}
+        // selectedRocket={selectedRocket}
         />
       </div>
 

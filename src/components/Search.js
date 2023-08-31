@@ -36,26 +36,37 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
 
 
   const costPerFlight = rockets.map(rocket => rocket.cost_per_launch);
-  const flightType = rockets.map(rocket => rocket.type);
-  const flightName = rockets.map(rocket => rocket.name);
+  const flightType = rockets.map(rocket => rocket.rocket_type);
+  const flightName = rockets.map(rocket => rocket.rocket_name);
 
   const countries = flightName;
   const costPerLaunchOptions = costPerFlight;
   const firstFlightDates = flightType;
 
-  const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
-    updateFilterOptions({ country: event.target.value });
-  };
+  // console.log(countries, costPerLaunchOptions, firstFlightDates);
 
-  const handleCostChange = (event) => {
-    setSelectedCost(event.target.value);
-    updateFilterOptions({ cost_per_launch: event.target.value });
-  };
+  // const handleCountryChange = (event) => {
+  //   setSelectedCountry(event.target.value);
+  //   updateFilterOptions({ country: event.target.value });
+  // };
 
-  const handleFlightChange = (event) => {
-    setSelectedFlight(event.target.value);
-    updateFilterOptions({ first_flight: event.target.value });
+  // const handleCostChange = (event) => {
+  //   setSelectedCost(event.target.value);
+  //   updateFilterOptions({ cost_per_launch: event.target.value });
+  // };
+
+  // const handleFlightChange = (event) => {
+  //   setSelectedFlight(event.target.value);
+  //   updateFilterOptions({ first_flight: event.target.value });
+  // };
+
+  const applyFilters = () => {
+    const filters = {
+      country: selectedCountry,
+      cost_per_launch: selectedCost,
+      first_flight: selectedFlight,
+    };
+    updateFilterOptions(filters);
   };
 
   return (
@@ -64,7 +75,7 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
         <select
           name="country"
           value={selectedCountry}
-          onChange={handleCountryChange}
+          onChange={(e) => setSelectedCountry(e.target.value)}
           className="block appearance-none w-full bg-gray-500 rounded border border-gray-300 focus:border-white focus:ring-2 focus:ring-white text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
           <option value="">Select Name</option>
@@ -92,7 +103,7 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
         <select
           name="cost_per_launch"
           value={selectedCost}
-          onChange={handleCostChange}
+          onChange={(e) => setSelectedCost(e.target.value)}
           className="block appearance-none w-full bg-gray-500 rounded border border-gray-300 focus:border-white focus:ring-2 focus:ring-white text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
           <option value="">Select Cost</option>
@@ -120,7 +131,7 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
         <select
           name="first_flight"
           value={selectedFlight}
-          onChange={handleFlightChange}
+          onChange={(e) => setSelectedFlight(e.target.value)}
           className="block appearance-none w-full bg-gray-500 rounded border border-gray-300 focus:border-white focus:ring-2 focus:ring-white text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
           <option value="">Select Type</option>
@@ -146,14 +157,7 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
       <div className="relative">
         <button
           className="bg-indigo-600 text-white px-3 py-1 rounded-md mt-2"
-          onClick={() => {
-            // Call the updateFilterOptions function to apply the selected filters
-            updateFilterOptions({
-              country: selectedCountry,
-              cost_per_launch: selectedCost,
-              first_flight: selectedFlight,
-            });
-          }}
+          onClick={applyFilters}
         >
           Apply Filters
         </button>

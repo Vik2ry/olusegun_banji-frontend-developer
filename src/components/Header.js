@@ -1,4 +1,4 @@
-import Search from "./Search";
+// import Search from "./Search";
 
 function Header({ searchQuery, onSetSearchQuery }) {
   return (
@@ -20,10 +20,10 @@ function Header({ searchQuery, onSetSearchQuery }) {
           <span className="ml-3 text-xl">Space-x</span>
         </div>
 
-        <Search
+        {/* <Search
           searchQuery={searchQuery}
           updateSearchQuery={(query) => onSetSearchQuery}
-        ></Search>
+        ></Search> */}
       </div>
     </header>
   );

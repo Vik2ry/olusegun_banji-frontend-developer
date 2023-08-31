@@ -10,22 +10,23 @@ function Modal({ rocket, closeModal }) {
             {!rocket ? (
                 <Loading />
             ) : (
-                <div className="absolute w-full inset-0 z-50 flex items-center justify-center bg-black">
 
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full overflow-y-auto">
+                <section >
+                    <article>
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 
-                        <section className="py-32 max-width grid grid-cols-1 gap-8 md:grid-cols-2">
-                            <article>
+                            <div className="bg-white rounded-lg p-8 max-w-md overflow-y-auto max-h-[80vh]">
+
                                 <h1 className="heading">{rocket.name}</h1>
 
-                                <h2 className="capitalize text-3xl opacity-75 mt-2 text-white font-bold">
+                                <h2 className="capitalize text-3xl opacity-75 mt-2 text-black font-bold">
                                     Type: {rocket.type}
                                 </h2>
-                                <h2 className="text-3xl opacity-75 mt-2 text-white font-bold mb-8">
+                                <h2 className="text-3xl opacity-75 mt-2 text-black font-bold mb-8">
                                     First Flight Date: {rocket.first_flight}
                                 </h2>
 
-                                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 text-white opacity-75">
+                                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 text-black opacity-75">
                                     <ul>
                                         <li>
                                             Cost per launch:{" "}
@@ -61,11 +62,11 @@ function Modal({ rocket, closeModal }) {
                                     </ul>
                                 </div>
 
-                                <p className="text-white opacity-75 mt-5">
+                                <p className="text-black opacity-75 mt-5">
                                     {rocket.description}
                                 </p>
 
-                                <ul className="flex items-center justify-start gap-3 mt-5">
+                                <ul className="flex items-center justify-start gap-3 mt-5 mb-2">
                                     <li>
                                         <a
                                             href={rocket.wikipedia}
@@ -87,9 +88,6 @@ function Modal({ rocket, closeModal }) {
                                         </button>
                                     </li>
                                 </ul>
-                            </article>
-
-                            <article>
                                 <img
                                     src={rocket.flickr_images[value]}
                                     alt={rocket.name}
@@ -108,10 +106,12 @@ function Modal({ rocket, closeModal }) {
                                         </li>
                                     ))}
                                 </ul>
-                            </article>
-                        </section>
-                    </div>
-                </div>
+                            </div>
+                        </div>
+
+                    </article>
+                </section>
+
             )
             }
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={closeModal}>

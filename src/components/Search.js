@@ -35,13 +35,15 @@ function Search({ rocketIds, filterOptions, updateFilterOptions }) {
   }, [fetchRockets]);
 
 
-  const costPerFlight = rockets.map(rocket => rocket.cost_per_launch);
-  const flightType = rockets.map(rocket => rocket.rocket_type);
-  const flightName = rockets.map(rocket => rocket.rocket_name);
+  const costPerLaunchOptions = rockets.map(rocket => rocket.cost_per_launch);
+  const firstFlightDates = rockets.map(rocket => rocket.type);
+  const countries = rockets.map(rocket => rocket.name);
 
-  const countries = flightName;
-  const costPerLaunchOptions = costPerFlight;
-  const firstFlightDates = flightType;
+  console.log(countries, firstFlightDates);
+
+  // const countries = flightName;
+  // const costPerLaunchOptions = costPerFlight;
+  // const firstFlightDates = flightType;
 
   // console.log(countries, costPerLaunchOptions, firstFlightDates);
 

@@ -49,15 +49,18 @@ function RocketList({ rocketIds, filterOptions }) {
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
-          {filteredRockets.length > 0 ? (
-            // Conditionally render RocketCard components if there are filtered rockets
-            filteredRockets.map((rocket) => (
-              <RocketCard key={rocket.id} rocket={rocket} />
-            ))
-          ) : (
-            // Render a message if there are no filtered rockets
-            <p>Please fill all the selected filters.</p>
-          )}
+          {
+            !rockets ?
+              (
+                rockets.map((rocket) => (
+                  <RocketCard rocket={rocket} />)
+                )) :
+              (
+                filteredRockets.map((rocket) => (
+                  <RocketCard key={rocket.id} rocket={rocket} />)
+                ))
+
+          }
         </div>
       </div>
 

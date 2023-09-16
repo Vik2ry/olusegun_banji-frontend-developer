@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -7,26 +8,40 @@ import Search from "./components/Search"; // Import the new Search component
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRocket, setSelectedRocket] = useState(null);
-  // const [rockets, setRockets] = useState([]);
+  const [selectedRocket, setSelectedRocket] = useState([]);
+  const [rockets, setRockets] = useState([]);
+
+  useEffect(() => {
+    getRockets();
+  }, []);
+
+  function getRockets() {
+    axios
+      .get('https://api.spacexdata.com/v4/rockets')
+      .then((response) => {
+        console.log(response.data);
+        setRockets(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching rockets:', error);
+      });
+  }
 
   const searchFilter = (text) => {
     setSearchQuery(text);
     const newData = text
-      ? selectedRocket.filter((item) => {
-        const itemData = item.name
-          ? item.name.toUpperCase()
-          : "".toUpperCase() ||
-            item.type
-            ? item.type.toUpperCase()
-            : "".toUpperCase() ||
-              item.cost_per_launch
-              ? item.cost_per_launch.toUpperCase()
-              : "".toUpperCase();
+      ? rockets.filter((item) => {
+        const itemData = (
+          item.name +
+          ' ' +
+          item.type +
+          ' ' +
+          item.cost_per_launch
+        ).toUpperCase();
         const input = text.toUpperCase();
         return itemData.indexOf(input) > -1;
       })
-      : selectedRocket; // If no text, show all rockets
+      : rockets; // If no text, show all rockets
     setSelectedRocket(newData);
   };
 

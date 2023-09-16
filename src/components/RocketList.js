@@ -9,9 +9,6 @@ function RocketList({ searchQuery, onSelectRocket }) {
 
   const [rockets, setRockets] = useState([]);
 
-  const rocketsToDisplay = searchQuery ? onSelectRocket : rockets;
-
-
   useEffect(() => {
     getRockets();
   }, []);
@@ -27,6 +24,8 @@ function RocketList({ searchQuery, onSelectRocket }) {
         setMeta(response.data)
       });
   }
+
+  const rocketsToDisplay = searchQuery ? onSelectRocket() : rockets || [];
 
   // const fetchRockets = useCallback(async () => {
   //   try {

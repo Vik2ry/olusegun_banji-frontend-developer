@@ -28,21 +28,28 @@ function App() {
   }
 
   const searchFilter = (text) => {
-    setSearchQuery(text);
-    const newData = text
-      ? rockets.filter((item) => {
-        const itemData = (
-          item.name +
-          ' ' +
-          item.type +
-          ' ' +
-          item.cost_per_launch
-        ).toUpperCase();
-        const input = text.toUpperCase();
-        return itemData.indexOf(input) > -1;
-      })
-      : rockets; // If no text, show all rockets
-    setSelectedRocket(newData);
+    if (text) {
+      setSearchQuery(text);
+      const newData = text
+        ? rockets.filter((item) => {
+          const itemData = (
+            item.name +
+            ' ' +
+            item.type +
+            ' ' +
+            item.cost_per_launch
+          ).toUpperCase();
+          const input = text.toUpperCase();
+          return itemData.indexOf(input) > -1;
+        })
+        : rockets; // If no text, show all rockets
+      setSelectedRocket(newData);
+    } else {
+      setSearchQuery(text);
+      setSelectedRocket(rockets);
+      // console.log(selectedRocket, "selectedRocket")
+
+    }
   };
 
   // const [filterOptions, setFilterOptions] = useState({}); // Initialize filter options
@@ -116,7 +123,7 @@ function App() {
         </div>
         <RocketList
           searchQuery={searchQuery}
-          onSelectRocket={(rocket) => setSelectedRocket(rocket)}
+          onSelectRocket={selectedRocket}
         ></RocketList>
       </div>
 

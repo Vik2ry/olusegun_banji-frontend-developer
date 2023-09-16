@@ -24,8 +24,7 @@ function RocketList({ searchQuery, onSelectRocket }) {
         setMeta(response.data)
       });
   }
-
-  const rocketsToDisplay = searchQuery ? onSelectRocket() : rockets || [];
+  const rocketsToDisplay = searchQuery ? onSelectRocket : rockets;
 
   // const fetchRockets = useCallback(async () => {
   //   try {
@@ -59,7 +58,7 @@ function RocketList({ searchQuery, onSelectRocket }) {
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
           {rocketsToDisplay.map((rocket) => (
-            <RocketCard key={rocket.id} rocket={rocket} onSelectRocket={onSelectRocket} />
+            <RocketCard key={rocket.id} rocket={rocket} />
           ))}
         </div>
       </div>

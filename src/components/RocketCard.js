@@ -33,10 +33,9 @@ function RocketCard({ rocket }) {
         </div>
       </div>
 
-
       {/* Render the modal when it's open */}
       {isModalOpen && (
-        <Modal rocket={rocket} closeModal={closeModal} />
+        <Modal rocketId={rocket.id} closeModal={closeModal} />
       )}
     </div>
   );

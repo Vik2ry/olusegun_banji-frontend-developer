@@ -7,9 +7,31 @@ import Search from "./components/Search"; // Import the new Search component
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  // const [selectedRocket, setSelectedRocket] = useState(null);
-  const [filterOptions, setFilterOptions] = useState({}); // Initialize filter options
-  const rocketIds = ['falcon1', 'falcon9', 'falconheavy', 'starship'];
+  const [selectedRocket, setSelectedRocket] = useState(null);
+  // const [rockets, setRockets] = useState([]);
+
+  const searchFilter = (text) => {
+    setSearchQuery(text);
+    const newData = text
+      ? selectedRocket.filter((item) => {
+        const itemData = item.name
+          ? item.name.toUpperCase()
+          : "".toUpperCase() ||
+            item.type
+            ? item.type.toUpperCase()
+            : "".toUpperCase() ||
+              item.cost_per_launch
+              ? item.cost_per_launch.toUpperCase()
+              : "".toUpperCase();
+        const input = text.toUpperCase();
+        return itemData.indexOf(input) > -1;
+      })
+      : selectedRocket; // If no text, show all rockets
+    setSelectedRocket(newData);
+  };
+
+  // const [filterOptions, setFilterOptions] = useState({}); // Initialize filter options
+  // const rocketIds = ['falcon1', 'falcon9', 'falconheavy', 'starship'];
 
   return (
     <div className="bg-slate-800 text-white flex flex-col">
@@ -74,15 +96,13 @@ function App() {
         </div>
       </div>
       <div id="2">
-
-        {/* Render the new Search component */}
-        <Search rocketIds={rocketIds} filterOptions={filterOptions} updateFilterOptions={setFilterOptions} />
-
+        <div className="relative lg:w-1/4 md:w-1/2 p-4 w-full">
+          <Search searchFilter={searchFilter} />
+        </div>
         <RocketList
           searchQuery={searchQuery}
-          filterOptions={filterOptions}
-        // selectedRocket={selectedRocket}
-        />
+          onSelectRocket={(rocket) => setSelectedRocket(rocket)}
+        ></RocketList>
       </div>
 
       <Footer></Footer>

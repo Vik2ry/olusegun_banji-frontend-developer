@@ -1,66 +1,67 @@
 import RocketCard from "./RocketCard";
 // import RocketDetail from "./RocketDetail";
 import PaginationControls from "./PaginationControls";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-function RocketList({ rocketIds, filterOptions }) {
+function RocketList({ searchQuery, onSelectRocket }) {
   const [meta, setMeta] = useState({});
 
   const [rockets, setRockets] = useState([]);
 
-  const fetchRockets = useCallback(async () => {
-    try {
-      let queryParams = {
-        id: rocketIds.join(','),
-      };
+  const rocketsToDisplay = searchQuery ? onSelectRocket : rockets;
 
-      // Apply filters if provided
-      if (filterOptions) {
-        queryParams = { ...queryParams, ...filterOptions };
-      }
-
-      const response = await axios.get('https://api.spacexdata.com/v4/rockets', {
-        params: queryParams,
-      });
-      setRockets(response.data);
-      setMeta(response.data)
-
-    } catch (error) {
-      console.error('Error fetching rockets:', error);
-    }
-  }, [rocketIds, filterOptions]);
 
   useEffect(() => {
+    getRockets();
+  }, []);
 
-    fetchRockets();
-  }, [fetchRockets]);
+  function getRockets() {
+    axios
+      .post(
+        "https://api.spacexdata.com/v4/rockets/query"
+      )
+      .then(function (response) {
+        console.log(response.data.docs);
+        setRockets(response.data.docs);
+        setMeta(response.data)
+      });
+  }
 
-  const filteredRockets = rockets.filter((rocket) => {
-    // Apply the filters based on filterOptions
-    const countryMatch = !filterOptions.country || rocket.country === filterOptions.country;
-    const costMatch = !filterOptions.cost_per_launch || rocket.cost_per_launch === parseInt(filterOptions.cost_per_launch);
-    const flightMatch = !filterOptions.first_flight || rocket.type === filterOptions.first_flight;
+  // const fetchRockets = useCallback(async () => {
+  //   try {
+  //     let queryParams = {
+  //       id: rocketIds.join(','),
+  //     };
 
-    return countryMatch && costMatch && flightMatch;
-  });
+  //     // Apply filters if provided
+  //     if (filterOptions) {
+  //       queryParams = { ...queryParams, ...filterOptions };
+  //     }
+
+  //     const response = await axios.get('https://api.spacexdata.com/v4/rockets', {
+  //       params: queryParams,
+  //     });
+  //     setRockets(response.data);
+  //     setMeta(response.data)
+
+  //   } catch (error) {
+  //     console.error('Error fetching rockets:', error);
+  //   }
+  // }, [rocketIds, filterOptions]);
+
+  // useEffect(() => {
+
+  //   fetchRockets();
+  // }, [fetchRockets]);
 
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
-          {
-            !rockets ?
-              (
-                rockets.map((rocket) => (
-                  <RocketCard rocket={rocket} />)
-                )) :
-              (
-                filteredRockets.map((rocket) => (
-                  <RocketCard key={rocket.id} rocket={rocket} />)
-                ))
-
-          }
+          {rocketsToDisplay.map((rocket) => (
+            <RocketCard key={rocket.id} rocket={rocket} onSelectRocket={onSelectRocket} />
+          ))}
         </div>
       </div>
 
@@ -71,7 +72,7 @@ function RocketList({ rocketIds, filterOptions }) {
           pageCount={meta.limit}
           totalCount={meta.totalDocs}
           totalPages={meta.totalPages ?? []}
-          onClickOnPage={page => fetchRockets()}
+          onClickOnPage={page => getRockets()}
         ></PaginationControls>
       </div>
     </section>
